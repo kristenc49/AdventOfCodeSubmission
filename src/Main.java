@@ -14,26 +14,36 @@ public class Main {
             left.add(fileData.get(i).split("   ")[0]);
             right.add(fileData.get(i).split("   ")[1]);
         }
-        //    System.out.println(fileData);
-        System.out.println(left);
-        System.out.println(right);
 
         Collections.sort(left);
         Collections.sort(right);
 
-        ArrayList<Integer> differences = new ArrayList<>();
+        int score = 0;
         for (int i = 0; i < left.size(); i++) {
-            int num1 = Integer.parseInt(left.get(i));
-            int num2 = Integer.parseInt(right.get(i));
-            differences.add(Math.abs(num1-num2));
+            int count = 0;
+            for (int j = 0; j < right.size(); j++) {
+                if (Integer.parseInt(left.get(i)) == Integer.parseInt(right.get(j))) {
+                    count++;
+                }
+            }
+            score += (Integer.parseInt(left.get(i)) * count);
         }
 
-        int sum = 0;
-        for (int i = 0; i < differences.size(); i++) {
-            sum += differences.get(i);
-        }
+        System.out.println(score);
 
-        System.out.println(sum);
+//        ArrayList<Integer> differences = new ArrayList<>();
+//        for (int i = 0; i < left.size(); i++) {
+//            int num1 = Integer.parseInt(left.get(i));
+//            int num2 = Integer.parseInt(right.get(i));
+//            differences.add(Math.abs(num1-num2));
+//        }
+
+//        int sum = 0;
+//        for (int i = 0; i < differences.size(); i++) {
+//            sum += differences.get(i);
+//        }
+//
+//        System.out.println(sum);
     }
 
 
