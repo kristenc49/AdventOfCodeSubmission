@@ -6,49 +6,35 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        ArrayList<String> fileData = getFileData("src/Day2Input.txt");
-
-        int count = 0;
+        ArrayList<String> fileData = getFileData("src/day3input.txt");
+        String data = "";
         for (int i = 0; i < fileData.size(); i++) {
-            boolean increasing = false;
-            String[] array = fileData.get(i).split(" ");
-          //  for (int j = 1; j < array.length-1; j++) {
-            int j = 1;
-            while (!increasing && j < array.length) {
-                if (Integer.parseInt(array[j]) > Integer.parseInt(array[j - 1])) {
-                    increasing = true;
-                }
-                j++;
-            }
-
-            boolean decreasing = false;
-            int x = 1;
-            while (!decreasing && x < array.length) {
-                if (Integer.parseInt(array[x]) < Integer.parseInt(array[x - 1])) {
-                    decreasing = true;
-                }
-                x++;
-            }
-            if (increasing || decreasing) {
-                int count2 = 0;
-                for (int n = 0; n < array.length - 1; n++) {
-                    int num = Math.abs(Integer.parseInt(array[n]) - Integer.parseInt(array[n+1]));
-                    if (num < 1 || num > 3) {
-                        count2++;
-                    }
-                }
-
-                if (count2 == 0) {
-                    count++;
-                }
-            }
-        //    }
+            data += fileData.get(i);
         }
 
-        System.out.println(count);
+        for (int i = 0; i < data.length(); i ++) {
+            int num1=0;
+            if (data.substring(i, i + 4).equals("mul(")) {
+                if ((isNumeric(data.substring(i+4,i+5))) && (isNumeric(data.substring(i+5, i+6))) && (isNumeric(data.substring(i+6,i+7))) && data.substring(i+7,i+8).equals(",")) {
+                    num1 = Integer.parseInt(data.substring(i+4,i+7));
+                } else if ((isNumeric(data.substring(i+4,i+5))) && (isNumeric(data.substring(i+5, i+6)) && data.substring(i+7,i+8).equals(",")) ){
+                    num1 = Integer.parseInt(data.substring(i+4,i+6));
+                } else if ((isNumeric(data.substring(i+4,i+5))) && data.substring(i+7,i+8).equals(",")) {}
+                    num1 = Integer.parseInt(data.substring(i+4, i+5));
+            }
+        }
 
     }
 
+    public static boolean isNumeric(String x) {
+        boolean numeric = true;
+        try {
+            Double num = Double.parseDouble(x);
+        } catch (NumberFormatException e) {
+            numeric = false;
+        }
+        return numeric;
+    }
 
     public static ArrayList<String> getFileData(String fileName) {
         ArrayList<String> fileData = new ArrayList<String>();
