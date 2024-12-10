@@ -11,21 +11,52 @@ public class Main {
         for (int i = 0; i < fileData.size(); i++) {
             data += fileData.get(i);
         }
-
-        for (int i = 0; i < data.length(); i ++) {
+        int sum = 0;
+        for (int i = 0; i < data.length() - 11; i++) {
             int num1=0;
+            int num2=0;
             if (data.substring(i, i + 4).equals("mul(")) {
                 if ((isNumeric(data.substring(i+4,i+5))) && (isNumeric(data.substring(i+5, i+6))) && (isNumeric(data.substring(i+6,i+7))) && data.substring(i+7,i+8).equals(",")) {
-                    num1 = Integer.parseInt(data.substring(i+4,i+7));
-                } else if ((isNumeric(data.substring(i+4,i+5))) && (isNumeric(data.substring(i+5, i+6)) && data.substring(i+7,i+8).equals(",")) ){
-                    num1 = Integer.parseInt(data.substring(i+4,i+6));
-                } else if ((isNumeric(data.substring(i+4,i+5))) && data.substring(i+7,i+8).equals(",")) {}
-                    num1 = Integer.parseInt(data.substring(i+4, i+5));
+                num1 = Integer.parseInt(data.substring(i+4,i+7));
+                    if ((isNumeric(data.substring(i+8,i+9))) && (isNumeric(data.substring(i+9, i+10))) && (isNumeric(data.substring(i+10,i+11))) && data.substring(i+11,i+12).equals(")")) {
+                        num2 = Integer.parseInt(data.substring(i+8,i+11));
+                    } else if ((isNumeric(data.substring(i+8,i+9))) && (isNumeric(data.substring(i+9, i+10))) && data.substring(i+10,i+11).equals(")")){
+                        num2 = Integer.parseInt(data.substring(i+8,i+10));
+                    } else if ((isNumeric(data.substring(i+8,i+9))) && data.substring(i+9,i+10).equals(")")) {
+                        num2  = Integer.parseInt(data.substring(i+8, i+9));
+                    }
+                    sum += num1 * num2;
+                } else if ((isNumeric(data.substring(i+4,i+5))) && (isNumeric(data.substring(i+5, i+6)) && data.substring(i+6,i+7).equals(",")) ) {
+                num1 = Integer.parseInt(data.substring(i + 4, i + 6));
+                    if ((isNumeric(data.substring(i + 7, i + 8))) && (isNumeric(data.substring(i + 8, i + 9))) && (isNumeric(data.substring(i + 9, i + 10))) && data.substring(i + 10, i + 11).equals(")")) {
+                        num2 = Integer.parseInt(data.substring(i + 7, i + 10));
+                    } else if ((isNumeric(data.substring(i + 7, i + 8))) && (isNumeric(data.substring(i + 8, i + 9))) && data.substring(i + 9, i + 10).equals(")")) {
+                        num2 = Integer.parseInt(data.substring(i + 7, i + 9));
+                    } else if ((isNumeric(data.substring(i + 7, i + 8))) && data.substring(i + 8, i + 9).equals(")")) {
+                        num2 = Integer.parseInt(data.substring(i + 7, i + 8));
+                    }
+                    sum += num1 * num2;
+                } else if ((isNumeric(data.substring(i+4,i+5))) && data.substring(i+5,i+6).equals(",")) {}
+                num1 = Integer.parseInt(data.substring(i+4, i+5));
+                if ((isNumeric(data.substring(i + 6, i + 7))) && (isNumeric(data.substring(i + 7, i + 8))) && (isNumeric(data.substring(i + 8, i + 9))) && data.substring(i + 9, i + 10).equals(")")) {
+                    num2 = Integer.parseInt(data.substring(i + 6, i + 9));
+                } else if ((isNumeric(data.substring(i + 6, i + 7))) && (isNumeric(data.substring(i + 7, i + 8))) && data.substring(i + 8, i + 9).equals(")")) {
+                    num2 = Integer.parseInt(data.substring(i + 6, i + 8));
+                } else if ((isNumeric(data.substring(i + 6, i + 7))) && data.substring(i + 7, i + 8).equals(")")) {
+                    num2 = Integer.parseInt(data.substring(i + 6, i + 7));
+                }
+                sum += num1 * num2;
             }
+
         }
+
+        System.out.println(sum);
 
     }
 
+    public static void checkNum2() {
+
+    }
     public static boolean isNumeric(String x) {
         boolean numeric = true;
         try {
