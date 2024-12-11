@@ -5,66 +5,81 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
-        ArrayList<String> fileData = getFileData("src/day3input.txt");
-        String data = "";
-        for (int i = 0; i < fileData.size(); i++) {
-            data += fileData.get(i);
-        }
-        int sum = 0;
-        for (int i = 0; i < data.length() - 11; i++) {
-            int num1=0;
-            int num2=0;
-            if (data.substring(i, i + 4).equals("mul(")) {
-                if ((isNumeric(data.substring(i+4,i+5))) && (isNumeric(data.substring(i+5, i+6))) && (isNumeric(data.substring(i+6,i+7))) && data.substring(i+7,i+8).equals(",")) {
-                num1 = Integer.parseInt(data.substring(i+4,i+7));
-                    if ((isNumeric(data.substring(i+8,i+9))) && (isNumeric(data.substring(i+9, i+10))) && (isNumeric(data.substring(i+10,i+11))) && data.substring(i+11,i+12).equals(")")) {
-                        num2 = Integer.parseInt(data.substring(i+8,i+11));
-                    } else if ((isNumeric(data.substring(i+8,i+9))) && (isNumeric(data.substring(i+9, i+10))) && data.substring(i+10,i+11).equals(")")){
-                        num2 = Integer.parseInt(data.substring(i+8,i+10));
-                    } else if ((isNumeric(data.substring(i+8,i+9))) && data.substring(i+9,i+10).equals(")")) {
-                        num2  = Integer.parseInt(data.substring(i+8, i+9));
-                    }
-                    sum += num1 * num2;
-                } else if ((isNumeric(data.substring(i+4,i+5))) && (isNumeric(data.substring(i+5, i+6)) && data.substring(i+6,i+7).equals(",")) ) {
-                num1 = Integer.parseInt(data.substring(i + 4, i + 6));
-                    if ((isNumeric(data.substring(i + 7, i + 8))) && (isNumeric(data.substring(i + 8, i + 9))) && (isNumeric(data.substring(i + 9, i + 10))) && data.substring(i + 10, i + 11).equals(")")) {
-                        num2 = Integer.parseInt(data.substring(i + 7, i + 10));
-                    } else if ((isNumeric(data.substring(i + 7, i + 8))) && (isNumeric(data.substring(i + 8, i + 9))) && data.substring(i + 9, i + 10).equals(")")) {
-                        num2 = Integer.parseInt(data.substring(i + 7, i + 9));
-                    } else if ((isNumeric(data.substring(i + 7, i + 8))) && data.substring(i + 8, i + 9).equals(")")) {
-                        num2 = Integer.parseInt(data.substring(i + 7, i + 8));
-                    }
-                    sum += num1 * num2;
-                } else if ((isNumeric(data.substring(i+4,i+5))) && data.substring(i+5,i+6).equals(",")) {}
-                num1 = Integer.parseInt(data.substring(i+4, i+5));
-                if ((isNumeric(data.substring(i + 6, i + 7))) && (isNumeric(data.substring(i + 7, i + 8))) && (isNumeric(data.substring(i + 8, i + 9))) && data.substring(i + 9, i + 10).equals(")")) {
-                    num2 = Integer.parseInt(data.substring(i + 6, i + 9));
-                } else if ((isNumeric(data.substring(i + 6, i + 7))) && (isNumeric(data.substring(i + 7, i + 8))) && data.substring(i + 8, i + 9).equals(")")) {
-                    num2 = Integer.parseInt(data.substring(i + 6, i + 8));
-                } else if ((isNumeric(data.substring(i + 6, i + 7))) && data.substring(i + 7, i + 8).equals(")")) {
-                    num2 = Integer.parseInt(data.substring(i + 6, i + 7));
+        int count = 0;
+        ArrayList<String> fileData = getFileData("src/Day2Input.txt");
+        for (String line : fileData) {
+            boolean safe = false;
+            String[] lineNums = line.split(" ");
+            if (isIncreasing(lineNums) || isDecreasing(lineNums)) {
+                if (increment3(lineNums)) {
+                    safe = true;
                 }
-                sum += num1 * num2;
             }
 
+            if (safe) {
+                count++;
+            }
         }
 
-        System.out.println(sum);
+        System.out.println(count);
 
     }
 
-    public static void checkNum2() {
 
-    }
-    public static boolean isNumeric(String x) {
-        boolean numeric = true;
-        try {
-            Double num = Double.parseDouble(x);
-        } catch (NumberFormatException e) {
-            numeric = false;
+    public static boolean isIncreasing(String[] arr) {
+        ArrayList<Integer> nums = new ArrayList<Integer>();
+        for (String str : arr) {
+            nums.add(Integer.parseInt(str));
         }
-        return numeric;
+        int count = 0;
+        for (int i = 0; i < nums.size()-1; i++) {
+            if (nums.get(i) < nums.get(i+1)) {
+                count++;
+            }
+        }
+        if (count == nums.size() - 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean isDecreasing(String[] arr) {
+        ArrayList<Integer> nums = new ArrayList<Integer>();
+        for (String str : arr) {
+            nums.add(Integer.parseInt(str));
+        }
+        int count = 0;
+        for (int i = 0; i < nums.size()-1; i++) {
+            if (nums.get(i) > nums.get(i+1)) {
+                count++;
+            }
+        }
+        if (count == nums.size() - 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean increment3(String[] arr) {
+        ArrayList<Integer> nums = new ArrayList<Integer>();
+        for (String str : arr) {
+            nums.add(Integer.parseInt(str));
+        }
+
+        int count = 0;
+        for (int i = 0; i < nums.size()-1; i++) {
+            if (Math.abs(nums.get(i) - nums.get(i+1)) < 4) {
+                count++;
+            }
+        }
+
+        if (count == nums.size()-1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static ArrayList<String> getFileData(String fileName) {
