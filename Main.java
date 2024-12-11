@@ -37,11 +37,12 @@ public class Main {
                 count++;
             }
         }
-        if (count == nums.size() - 1) {
+        if ((count == nums.size() - 1) || (count == nums.size() - 2)) {
             return true;
         } else {
             return false;
         }
+
     }
 
     public static boolean isDecreasing(String[] arr) {
@@ -55,7 +56,7 @@ public class Main {
                 count++;
             }
         }
-        if (count == nums.size() - 1) {
+        if ((count == nums.size() - 1) || (count == nums.size() - 2)) {
             return true;
         } else {
             return false;
@@ -70,13 +71,35 @@ public class Main {
 
         int count = 0;
         for (int i = 0; i < nums.size()-1; i++) {
-            if (Math.abs(nums.get(i) - nums.get(i+1)) < 4) {
+            if (Math.abs(nums.get(i) - nums.get(i+1)) < 4 && Math.abs(nums.get(i) - nums.get(i+1)) > 0) {
                 count++;
             }
         }
 
-        if (count == nums.size()-1) {
-            return true;
+        if ((count == nums.size() - 1) || (count == nums.size() - 2)) {
+            int count2 = 0;
+            if (isDecreasing(arr)) {
+                for (int i = 0; i < nums.size()-1; i++) {
+                    if (nums.get(i) > nums.get(i+1)) {
+                        count2++;
+                    }
+                }
+            }
+
+            int count3 = 0;
+            if (isIncreasing(arr)) {
+                for (int i = 0; i < nums.size() - 1; i++) {
+                    if (nums.get(i) < nums.get(i + 1)) {
+                        count3++;
+                    }
+                }
+            }
+
+            if ((count2 == nums.size() - 1) || (count3 == nums.size()-1)) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
