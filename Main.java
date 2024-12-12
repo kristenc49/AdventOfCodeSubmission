@@ -10,7 +10,7 @@ public class Main {
         for (String line : fileData) {
             boolean safe = false;
             String[] lineNums = line.split(" ");
-            if (isIncreasing(lineNums) || isDecreasing(lineNums)) {
+            if (isIncreasing(lineNums) || isDecreasing(lineNums) || increasingSBR(lineNums) || decreasingSBR(lineNums)) {
                 if (increment3(lineNums)) {
                     safe = true;
                 }
@@ -37,7 +37,7 @@ public class Main {
                 count++;
             }
         }
-        if ((count == nums.size() - 1) || (count == nums.size() - 2)) {
+        if ((count == nums.size() - 1)) {
             return true;
         } else {
             return false;
@@ -45,6 +45,23 @@ public class Main {
 
     }
 
+    public static boolean increasingSBR(String[] arr) {
+        ArrayList<Integer> nums = new ArrayList<Integer>();
+        for (String str : arr) {
+            nums.add(Integer.parseInt(str));
+        }
+        int count = 0;
+        for (int i = 0; i < nums.size()-1; i++) {
+            if (nums.get(i) < nums.get(i+1)) {
+                count++;
+            }
+        }
+        if ((count == nums.size() - 2)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public static boolean isDecreasing(String[] arr) {
         ArrayList<Integer> nums = new ArrayList<Integer>();
         for (String str : arr) {
@@ -56,7 +73,25 @@ public class Main {
                 count++;
             }
         }
-        if ((count == nums.size() - 1) || (count == nums.size() - 2)) {
+        if ((count == nums.size() - 1)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean decreasingSBR(String[] arr) {
+        ArrayList<Integer> nums = new ArrayList<Integer>();
+        for (String str : arr) {
+            nums.add(Integer.parseInt(str));
+        }
+        int count = 0;
+        for (int i = 0; i < nums.size()-1; i++) {
+            if (nums.get(i) > nums.get(i+1)) {
+                count++;
+            }
+        }
+        if ((count == nums.size() - 2)) {
             return true;
         } else {
             return false;
@@ -76,30 +111,14 @@ public class Main {
             }
         }
 
-        if ((count == nums.size() - 1) || (count == nums.size() - 2)) {
-            int count2 = 0;
-            if (isDecreasing(arr)) {
-                for (int i = 0; i < nums.size()-1; i++) {
-                    if (nums.get(i) > nums.get(i+1)) {
-                        count2++;
-                    }
-                }
+        if (!increasingSBR(arr) && !decreasingSBR(arr)) {
+            if ((count == nums.size() - 2)) {
+    return true;
             }
+        }
 
-            int count3 = 0;
-            if (isIncreasing(arr)) {
-                for (int i = 0; i < nums.size() - 1; i++) {
-                    if (nums.get(i) < nums.get(i + 1)) {
-                        count3++;
-                    }
-                }
-            }
-
-            if ((count2 == nums.size() - 1) || (count3 == nums.size()-1)) {
-                return true;
-            } else {
-                return false;
-            }
+        if ((count == nums.size() - 1)) {
+            return true;
         } else {
             return false;
         }
