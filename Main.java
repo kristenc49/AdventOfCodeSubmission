@@ -5,123 +5,19 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        int count = 0;
-        ArrayList<String> fileData = getFileData("src/Day2Input.txt");
-        for (String line : fileData) {
-            boolean safe = false;
-            String[] lineNums = line.split(" ");
-            if (isIncreasing(lineNums) || isDecreasing(lineNums) || increasingSBR(lineNums) || decreasingSBR(lineNums)) {
-                if (increment3(lineNums)) {
-                    safe = true;
-                }
+
+        ArrayList<String> fileData = getFileData("src/day4input.txt");
+        String[][] crossword = new String[fileData.size()][fileData.get(0).length()];
+        for (int r = 0; r < crossword[0].length; r++) {
+            for (int c = 0; c < crossword.length; c++) {
+                
             }
-
-            if (safe) {
-                count++;
-            }
-        }
-
-        System.out.println(count);
-
-    }
-
-
-    public static boolean isIncreasing(String[] arr) {
-        ArrayList<Integer> nums = new ArrayList<Integer>();
-        for (String str : arr) {
-            nums.add(Integer.parseInt(str));
-        }
-        int count = 0;
-        for (int i = 0; i < nums.size()-1; i++) {
-            if (nums.get(i) < nums.get(i+1)) {
-                count++;
-            }
-        }
-        if ((count == nums.size() - 1)) {
-            return true;
-        } else {
-            return false;
         }
 
     }
 
-    public static boolean increasingSBR(String[] arr) {
-        ArrayList<Integer> nums = new ArrayList<Integer>();
-        for (String str : arr) {
-            nums.add(Integer.parseInt(str));
-        }
-        int count = 0;
-        for (int i = 0; i < nums.size()-1; i++) {
-            if (nums.get(i) < nums.get(i+1)) {
-                count++;
-            }
-        }
-        if ((count == nums.size() - 2)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    public static boolean isDecreasing(String[] arr) {
-        ArrayList<Integer> nums = new ArrayList<Integer>();
-        for (String str : arr) {
-            nums.add(Integer.parseInt(str));
-        }
-        int count = 0;
-        for (int i = 0; i < nums.size()-1; i++) {
-            if (nums.get(i) > nums.get(i+1)) {
-                count++;
-            }
-        }
-        if ((count == nums.size() - 1)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean isDiagonal(String str) {
 
-    public static boolean decreasingSBR(String[] arr) {
-        ArrayList<Integer> nums = new ArrayList<Integer>();
-        for (String str : arr) {
-            nums.add(Integer.parseInt(str));
-        }
-        int count = 0;
-        for (int i = 0; i < nums.size()-1; i++) {
-            if (nums.get(i) > nums.get(i+1)) {
-                count++;
-            }
-        }
-        if ((count == nums.size() - 2)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public static boolean increment3(String[] arr) {
-        ArrayList<Integer> nums = new ArrayList<Integer>();
-        for (String str : arr) {
-            nums.add(Integer.parseInt(str));
-        }
-
-        int count = 0;
-        for (int i = 0; i < nums.size()-1; i++) {
-            if (Math.abs(nums.get(i) - nums.get(i+1)) < 4 && Math.abs(nums.get(i) - nums.get(i+1)) > 0) {
-                count++;
-            }
-        }
-
-        if (!increasingSBR(arr) && !decreasingSBR(arr)) {
-            if ((count == nums.size() - 2)) {
-    return true;
-            }
-        }
-
-        if ((count == nums.size() - 1)) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public static ArrayList<String> getFileData(String fileName) {
