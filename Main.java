@@ -6,18 +6,69 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        ArrayList<String> fileData = getFileData("src/day4input.txt");
-        String[][] crossword = new String[fileData.size()][fileData.get(0).length()];
-        for (int r = 0; r < crossword[0].length; r++) {
-            for (int c = 0; c < crossword.length; c++) {
-                
-            }
+        ArrayList<String> fileData = getFileData("src/day3input.txt");
+        String data = "";
+        for (int i = 0; i < fileData.size(); i++) {
+            data += fileData.get(i);
         }
+        int sum = 0;
+        for (int i = 0; i < data.length() - 11; i++) {
+            int num1=0;
+            int num2=0;
+            if (data.substring(i, i + 4).equals("mul(")) {
+                if ((isNumeric(data.substring(i+4,i+5))) && (isNumeric(data.substring(i+5, i+6))) && (isNumeric(data.substring(i+6,i+7))) && data.substring(i+7,i+8).equals(",")) {
+                    num1 = Integer.parseInt(data.substring(i+4,i+7)); // num1 3 digits
+                    if ((isNumeric(data.substring(i+8,i+9))) && (isNumeric(data.substring(i+9, i+10))) && (isNumeric(data.substring(i+10,i+11))) && data.substring(i+11,i+12).equals(")")) {
+                        num2 = Integer.parseInt(data.substring(i+8,i+11)); // 3:3
+                        sum += num1 * num2;
+                    } else if ((isNumeric(data.substring(i+8,i+9))) && (isNumeric(data.substring(i+9, i+10))) && data.substring(i+10,i+11).equals(")")){
+                        num2 = Integer.parseInt(data.substring(i+8,i+10)); // 3:2
+                        sum += num1 * num2;
+                    } else if ((isNumeric(data.substring(i+8,i+9))) && data.substring(i+9,i+10).equals(")")) {
+                        num2  = Integer.parseInt(data.substring(i+8, i+9)); // 3:1
+                        sum += num1 * num2;
+                    }
+                } else if ((isNumeric(data.substring(i+4,i+5))) && (isNumeric(data.substring(i+5, i+6)) && data.substring(i+6,i+7).equals(",")) ) {
+                    num1 = Integer.parseInt(data.substring(i + 4, i + 6)); // num1 2 digits
+                    if ((isNumeric(data.substring(i + 7, i + 8))) && (isNumeric(data.substring(i + 8, i + 9))) && (isNumeric(data.substring(i + 9, i + 10))) && data.substring(i + 10, i + 11).equals(")")) {
+                        num2 = Integer.parseInt(data.substring(i + 7, i + 10)); // 2:3
+                        sum += num1 * num2;
+                    } else if ((isNumeric(data.substring(i + 7, i + 8))) && (isNumeric(data.substring(i + 8, i + 9))) && data.substring(i + 9, i + 10).equals(")")) {
+                        num2 = Integer.parseInt(data.substring(i + 7, i + 9)); // 2:2
+                        sum += num1 * num2;
+                    } else if ((isNumeric(data.substring(i + 7, i + 8))) && data.substring(i + 8, i + 9).equals(")")) {
+                        num2 = Integer.parseInt(data.substring(i + 7, i + 8)); // 2:1
+                        sum += num1 * num2;
+                    }
+                } else if ((isNumeric(data.substring(i+4,i+5))) && data.substring(i+5,i+6).equals(",")) {}
+                num1 = Integer.parseInt(data.substring(i+4, i+5)); // num1 1 digit
+                if ((isNumeric(data.substring(i + 6, i + 7))) && (isNumeric(data.substring(i + 7, i + 8))) && (isNumeric(data.substring(i + 8, i + 9))) && data.substring(i + 9, i + 10).equals(")")) {
+                    num2 = Integer.parseInt(data.substring(i + 6, i + 9)); // 1:3
+                    sum += num1 * num2;
+                } else if ((isNumeric(data.substring(i + 6, i + 7))) && (isNumeric(data.substring(i + 7, i + 8))) && data.substring(i + 8, i + 9).equals(")")) {
+                    num2 = Integer.parseInt(data.substring(i + 6, i + 8)); // 1:2
+                    sum += num1 * num2;
+                } else if ((isNumeric(data.substring(i + 6, i + 7))) && data.substring(i + 7, i + 8).equals(")")) {
+                    num2 = Integer.parseInt(data.substring(i + 6, i + 7)); // 1:1
+                    sum += num1 * num2;
+                }
+            }
+
+        }
+
+        System.out.println(sum);
 
     }
 
-    public static boolean isDiagonal(String str) {
+    public static void checkNum2() {
 
+    }
+    public static boolean isNumeric(String x) {
+       if (x.equals("0") || x.equals("1") || x.equals("2") || x.equals("3") || x.equals("4") || x.equals("5") || x.equals("6") || x.equals("7") || x.equals("8") || x.equals("9")) {
+           return true;
+       } else {
+           return false;
+       }
     }
 
     public static ArrayList<String> getFileData(String fileName) {
