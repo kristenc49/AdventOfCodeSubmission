@@ -6,23 +6,58 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        ArrayList<String> fileData = getFileData("src/day4input.txt");
-        String input = "";
+        ArrayList<String> fileData = getFileData("src/Day1Input.txt");
+
+        int calibrated = 0;
         for (int i = 0; i < fileData.size(); i++) {
-            input += fileData.get(i);
+            boolean operated = false;
+            String solution = "";
+            int x = 0;
+            while (!fileData.get(i).substring(x,x+1).equals(":")) {
+                solution += fileData.get(i).substring(x, x+1);
+                x++;
+            }
+
+            int numSolution = Integer.parseInt(solution);
+
+            String[] nums = fileData.get(i).substring(x + 1).split(" ");
+
+            if (multiply(nums) == numSolution) {
+                operated = true;
+            }
+
+            if (add(nums) == numSolution) {
+                operated = true;
+            }
+
+            if (operated) {
+                calibrated += numSolution;
+            }
+
         }
 
-        int i = 0;
-        String[][] crossword = new String[fileData.size()][fileData.get(0).length()];
-        for (int r = 0; r < crossword[0].length; r++) {
-            for (int c = 0; c < crossword.length; c++) {
-                crossword[r][c] = input.substring(i, i+1);
-                i++;
-            }
-        }
+        System.out.println(calibrated);
 
     }
 
+
+    public static int multiply(String[] nums) {
+        int product = 0;
+        for (int i = 0; i < nums.length - 1; i++) {
+            product += Integer.parseInt(nums[i]) * Integer.parseInt(nums[i+1]);
+        }
+
+        return product;
+    }
+
+    public static int add(String[] nums) {
+        int sum = 0;
+        for (int i = 0; i < nums.length - 1; i++) {
+             sum += Integer.parseInt(nums[i]) + Integer.parseInt(nums[i+1]);
+        }
+
+        return sum;
+    }
 
     public static ArrayList<String> getFileData(String fileName) {
         ArrayList<String> fileData = new ArrayList<String>();
