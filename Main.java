@@ -59,6 +59,14 @@ public class Main {
         return sum;
     }
 
+    public boolean combos(String[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            for (int x = 0; x < nums.length; i++) {
+                if 
+            }
+        }
+    }
+
     public static ArrayList<String> getFileData(String fileName) {
         ArrayList<String> fileData = new ArrayList<String>();
         try {
