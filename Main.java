@@ -61,8 +61,9 @@ public class Main {
 
     public boolean combos(String[] nums) {
         for (int i = 0; i < nums.length; i++) {
+            int currentNum = Integer.parseInt(nums[i]);
             for (int x = 0; x < nums.length; i++) {
-                if 
+                currentNum * 
             }
         }
     }
